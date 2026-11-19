@@ -2,13 +2,14 @@ import { describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { envFileValues } from "../src/config";
+import { appPath, envFileValues } from "../src/config";
 
 describe("environment envFile", () => {
-  test("parses the environment's envFile from the worktree", () => {
+  test("parses the environment's envFile from the app directory", () => {
     const worktree = fs.mkdtempSync(path.join(os.tmpdir(), "sim-fleet-env-"));
+    fs.mkdirSync(appPath(worktree), { recursive: true });
     fs.writeFileSync(
-      path.join(worktree, ".env.staging"),
+      path.join(appPath(worktree), ".env.staging"),
       [
         "# comment",
         "PLAIN=value",

@@ -255,13 +255,13 @@ export function renderEnvTemplate(
 }
 
 /**
- * Values from the environment's `envFile` (relative to the worktree). Expo's own
+ * Values from the environment's `envFile` (relative to the app directory). Expo's own
  * dotenv loading is disabled for lanes, so without this the file is never read.
  */
 export function envFileValues(worktreePath: string, environment: AppEnvironment): Record<string, string> {
   const envFile = projectConfig.environments[environment]?.envFile;
   if (!envFile) return {};
-  const filePath = path.resolve(worktreePath, envFile);
+  const filePath = path.resolve(appPath(worktreePath), envFile);
   if (!fs.existsSync(filePath)) return {};
   const values: Record<string, string> = {};
   for (const line of fs.readFileSync(filePath, "utf8").split(/\r?\n/)) {
