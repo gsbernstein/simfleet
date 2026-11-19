@@ -28,6 +28,11 @@ All notable changes to this project are documented here. The format follows
   Matching sessions by worktree now applies only to devices nobody has claimed or touched, so agents
   launched from one checkout no longer all show up on a lane started there.
 
+### Fixed
+
+- Android live video supports scrcpy 4.x session metadata and frame flags while retaining
+  compatibility with the earlier stream format.
+
 ## [0.1.1] - 2026-09-29
 
 ### Fixed
