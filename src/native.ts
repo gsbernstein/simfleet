@@ -8,6 +8,7 @@ import {
   NATIVE_SHELLS,
   PROJECT_CONFIG,
   appPath,
+  expoBinaryPath,
   projectBundleEnv,
   type AppEnvironment,
   type BuildMode,
@@ -175,7 +176,7 @@ async function buildNativeShell(
   fingerprint: string,
 ): Promise<string> {
   const appRoot = appPath(worktreePath);
-  const expo = path.join(appRoot, "node_modules", ".bin", "expo");
+  const expo = expoBinaryPath(worktreePath);
   if (!fs.existsSync(expo)) throw new Error(`Expo CLI is missing in ${appRoot}/node_modules`);
   const configuration = configurationFor(mode);
   const context: NativeContext = {
@@ -357,7 +358,7 @@ export async function createRebundledRelease(
   const destination = path.join(destinationRoot, path.basename(ensured.artifactPath));
   fs.cpSync(ensured.artifactPath, destination, { recursive: true });
   const appRoot = appPath(worktreePath);
-  const expo = path.join(appRoot, "node_modules", ".bin", "expo");
+  const expo = expoBinaryPath(worktreePath);
   const releaseEnvironment = {
     ...process.env,
     NODE_ENV: "production",

@@ -177,6 +177,15 @@ export function appPath(worktreePath: string): string {
   return path.join(worktreePath, APP_DIRECTORY);
 }
 
+/** The app's Expo CLI; npm/yarn workspaces hoist it to the worktree root. */
+export function expoBinaryPath(worktreePath: string): string {
+  const root = path.resolve(worktreePath);
+  for (let dir = appPath(worktreePath); ; dir = path.dirname(dir)) {
+    const candidate = path.join(dir, "node_modules", ".bin", "expo");
+    if (fs.existsSync(candidate) || dir === root || dir === path.dirname(dir)) return candidate;
+  }
+}
+
 const projectConfig = loadProjectConfig(PROJECT_ROOT);
 export const PROJECT_CONFIG = projectConfig;
 

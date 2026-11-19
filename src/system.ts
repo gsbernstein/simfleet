@@ -7,6 +7,7 @@ import {
   FLEET_CONFIG,
   PROJECT_CONFIG,
   appPath,
+  expoBinaryPath,
   getVariant,
   projectBundleEnv,
   type AppEnvironment,
@@ -554,7 +555,7 @@ export function isProcessRunning(pid: number): boolean {
 
 export function startMetro(session: FleetSession & { port: number }): number {
   const appRoot = appPath(session.worktreePath);
-  const expoBinary = path.join(appRoot, "node_modules", ".bin", "expo");
+  const expoBinary = expoBinaryPath(session.worktreePath);
   if (!fs.existsSync(expoBinary)) {
     throw new Error(`Expo CLI is missing in ${appRoot}/node_modules`);
   }
