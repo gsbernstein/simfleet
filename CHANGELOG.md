@@ -15,6 +15,12 @@ All notable changes to this project are documented here. The format follows
   already has one (say an Android emulator next to an iPhone) reuses that worktree's Metro and port
   instead of failing. Stopping a lane leaves Metro running while another lane still uses it.
 
+### Fixed
+
+- Lanes and bundles load the environment's `envFile`. It was documented but never read, and Expo's own
+  dotenv loading is disabled for lanes, so apps got none of its values. Variables already set in the
+  shell still win.
+
 ## [0.1.1] - 2026-09-29
 
 ### Fixed

@@ -7,6 +7,7 @@ import {
   FLEET_CONFIG,
   PROJECT_CONFIG,
   appPath,
+  envFileValues,
   expoBinaryPath,
   getVariant,
   projectBundleEnv,
@@ -575,6 +576,8 @@ export function startMetro(session: FleetSession & { port: number }): number {
       cwd: appRoot,
       detached: true,
       env: {
+        // Like Expo's dotenv: the file fills gaps, the shell environment wins.
+        ...envFileValues(session.worktreePath, session.environment),
         ...process.env,
         NODE_ENV: "development",
         ...projectBundleEnv({

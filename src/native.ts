@@ -8,6 +8,7 @@ import {
   NATIVE_SHELLS,
   PROJECT_CONFIG,
   appPath,
+  envFileValues,
   expoBinaryPath,
   projectBundleEnv,
   type AppEnvironment,
@@ -188,6 +189,7 @@ async function buildNativeShell(
   const cacheResult = await provider.resolveBuildCache(context);
   if (cacheResult) return cacheResult;
   const environment = {
+    ...envFileValues(worktreePath, "development"),
     ...process.env,
     NODE_ENV: mode === "debug" ? "development" : "production",
     ...projectBundleEnv({ environment: "development", mode, port: "embedded" }),
@@ -360,6 +362,7 @@ export async function createRebundledRelease(
   const appRoot = appPath(worktreePath);
   const expo = expoBinaryPath(worktreePath);
   const releaseEnvironment = {
+    ...envFileValues(worktreePath, environment),
     ...process.env,
     NODE_ENV: "production",
     METRO_PORT: "embedded",
